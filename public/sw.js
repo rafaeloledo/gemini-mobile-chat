@@ -1,4 +1,4 @@
-const CACHE_NAME = "gemini-mobile-v1";
+const CACHE_NAME = "gemini-mobile-v2";
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -24,6 +24,22 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   // Never intercept API calls, SSE streams, or non-GET requests
   if (event.request.method !== "GET" || url.pathname.startsWith("/api/")) {
+    return;
+  }
+  // Cache-first for static web fonts (CommitMono Nerd Font) so mobile loads instantaneously
+  if (url.pathname.startsWith("/fonts/")) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(event.request).then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return res;
+        });
+      })
+    );
     return;
   }
   event.respondWith(

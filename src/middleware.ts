@@ -20,9 +20,11 @@ function isPublicPath(pathname: string): boolean {
   if (
     pathname.startsWith("/_next/") ||
     pathname.startsWith("/icons/") ||
+    pathname.startsWith("/fonts/") ||
     pathname.endsWith(".png") ||
     pathname.endsWith(".svg") ||
-    pathname.endsWith(".ico")
+    pathname.endsWith(".ico") ||
+    pathname.endsWith(".woff2")
   ) {
     return true;
   }

@@ -10,6 +10,7 @@ import {
   Plus,
   Settings2,
   Sparkles,
+  Terminal,
   Volume2,
   VolumeX,
 } from "lucide-react";
@@ -27,6 +28,7 @@ import { MessageBubble } from "./MessageBubble";
 import { Composer } from "./Composer";
 import { ChatSettingsModal } from "./ChatSettingsModal";
 import { ImportModal } from "./ImportModal";
+import { TerminalDrawer } from "./TerminalDrawer";
 
 function stripMarkdownForSpeech(md: string): string {
   return md
@@ -44,6 +46,9 @@ export function ChatApp() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
+  const [terminalMounted, setTerminalMounted] = useState(false);
+  const [terminalVisible, setTerminalVisible] = useState(false);
+  const [terminalConnected, setTerminalConnected] = useState(false);
 
   const [chats, setChats] = useState<ChatSummary[]>([]);
   const [activeChat, setActiveChat] = useState<ChatDetail | null>(null);
@@ -485,6 +490,27 @@ export function ChatApp() {
           </div>
 
           <div className="flex shrink-0 items-center gap-1">
+            {/* Integrated Local PTY / SSH Terminal button */}
+            <button
+              type="button"
+              onClick={() => {
+                setTerminalMounted(true);
+                setTerminalVisible(true);
+              }}
+              className={`relative flex h-9 w-9 items-center justify-center rounded-xl transition ${
+                terminalMounted
+                  ? "bg-sky-500/20 text-sky-300"
+                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+              }`}
+              title="Abrir Terminal Local / SSH (suporta sudo)"
+              aria-label="Abrir Terminal Local ou SSH"
+            >
+              <Terminal className="h-[18px] w-[18px]" />
+              {terminalConnected && (
+                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-[#0b101c]" />
+              )}
+            </button>
+
             {/* Auto-speak TTS toggle */}
             <button
               type="button"
@@ -646,6 +672,20 @@ export function ChatApp() {
           onClose={() => setImportOpen(false)}
           onImport={handleImportConversation}
           onSelectExisting={(chatId) => void loadChat(chatId)}
+        />
+      )}
+
+      {terminalMounted && (
+        <TerminalDrawer
+          visible={terminalVisible}
+          workspacePath={activeChat?.workspacePath || workspaces[0] || ""}
+          onMinimize={() => setTerminalVisible(false)}
+          onCloseSession={() => {
+            setTerminalVisible(false);
+            setTerminalMounted(false);
+            setTerminalConnected(false);
+          }}
+          onStatusChange={setTerminalConnected}
         />
       )}
     </div>

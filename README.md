@@ -10,7 +10,8 @@ Interface web **mobile-first (PWA instalável)** para interagir pelo celular com
 - **Fotos e câmera**: anexe imagens da galeria ou tire fotos direto pela câmera do celular.
 - **Streaming em tempo real + Markdown**: respostas aparecem aos poucos com blocos de código copiáveis, tabelas e painel colapsável das ferramentas executadas pelo agente.
 - **Múltiplos chats persistidos em SQLite (Prisma)**: criar, buscar, renomear, apagar, escolher modelo (`agy models`), pasta de projeto (`cwd`) e modo de execução (`auto`, `plan`, `accept-edits`, `dangerous`).
-- **Segurança por senha**: login com cookie assinado (`HMAC-SHA256`, `HttpOnly`) para acesso remoto seguro.
+- **Terminal Local (PTY) & SSH integrado**: abra um terminal completo direto no celular (via `xterm.js` + WebSocket autenticado) para rodar `sudo` com senha interativa (sem passar pelo Gemini), editar arquivos ou conectar via SSH a outros servidores, com barra de atalhos mobile (`ESC`, `TAB`, `CTRL`, `^C`, setas, colar) e opção de minimizar mantendo a sessão ativa.
+- **Segurança por senha**: login com cookie assinado (`HMAC-SHA256`, `HttpOnly`) para acesso remoto seguro (HTTP + WebSocket).
 - **PWA instalável**: adicione à tela inicial do Android ou iPhone como app nativo.
 
 ## Configuração
