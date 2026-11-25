@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #090d16;
+  --surface: #111827;
+  --surface-elevated: #172033;
+  --foreground: #f1f5f9;
+  --muted: #94a3b8;
+  --border: rgba(148, 163, 184, 0.16);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom sleek scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+
+/* Voice waveform animation */
+@keyframes wavePulse {
+  0%, 100% {
+    transform: scaleY(0.35);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-wave {
+  animation: wavePulse 0.9s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Markdown styles for chat messages */
+.chat-markdown {
+  line-height: 1.6;
+  word-break: break-word;
+}
+.chat-markdown p {
+  margin-bottom: 0.65rem;
+}
+.chat-markdown p:last-child {
+  margin-bottom: 0;
+}
+.chat-markdown ul,
+.chat-markdown ol {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+}
+.chat-markdown ul {
+  list-style: disc;
+}
+.chat-markdown ol {
+  list-style: decimal;
+}
+.chat-markdown li {
+  margin-bottom: 0.25rem;
+}
+.chat-markdown h1,
+.chat-markdown h2,
+.chat-markdown h3 {
+  font-weight: 600;
+  margin-top: 0.9rem;
+  margin-bottom: 0.45rem;
+  color: #f8fafc;
+}
+.chat-markdown h1 {
+  font-size: 1.2rem;
+}
+.chat-markdown h2 {
+  font-size: 1.08rem;
+}
+.chat-markdown h3 {
+  font-size: 1rem;
+}
+.chat-markdown blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 0.8rem;
+  margin: 0.6rem 0;
+  color: #cbd5e1;
+}
+.chat-markdown a {
+  color: #38bdf8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.chat-markdown hr {
+  border-color: rgba(148, 163, 184, 0.2);
+  margin: 0.9rem 0;
+}
+.chat-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.chat-markdown th,
+.chat-markdown td {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+.chat-markdown th {
+  background: rgba(99, 102, 241, 0.14);
+  font-weight: 600;
 }
